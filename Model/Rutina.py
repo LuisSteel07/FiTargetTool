@@ -1,6 +1,7 @@
 class Rutina:
-    def __init__(self, _id: int, _lunes: list[str], _martes: list[str], _miercoles: list[str], _jueves: list[str], _viernes: list[str], _sabado: list[str], _domingo: list[str]):
+    def __init__(self, _id: int, _nombre: str, _lunes: list[str], _martes: list[str], _miercoles: list[str], _jueves: list[str], _viernes: list[str], _sabado: list[str], _domingo: list[str]):
         self.id = _id
+        self.nombre = _nombre
         self.lunes = _lunes
         self.martes = _martes
         self.miercoles = _miercoles

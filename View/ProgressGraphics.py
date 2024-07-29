@@ -2,6 +2,7 @@ from flet import (TextButton, Container, ChartGridLines, Page, Row, Text, Filled
                   LineChartDataPoint, LineChartData, colors, Border, BorderSide, ChartAxis, FontWeight, ChartAxisLabel)
 
 from Model.Progreso import Progreso
+from View.EditData import add_progreso
 
 
 def create_linechartdata_points(datas: list[int]) -> list[LineChartDataPoint]:
@@ -81,14 +82,17 @@ def show_graphic(datas: list) -> LineChart:
 def open_graphic(root: Page, datas: list[int], text: str):
     graphic_alert = AlertDialog(
         title=Text(text),
+        modal=True,
         content=Container(
             show_graphic(datas),
             width=800,
             padding=20
-        )
+        ),
+        actions=[
+            TextButton("Cerrar", on_click=lambda e: root.close(graphic_alert))
+        ]
     )
 
-    root.add(graphic_alert)
     root.open(graphic_alert)
 
 
@@ -99,7 +103,7 @@ def collection_graphics_view(root: Page, progress: Progreso) -> Column:
                 content=Text("Progresos Registrados", size=22),
                 padding=10
             ),
-            TextButton("Agregar Progreso")
+            TextButton("Agregar Progreso", on_click=lambda e: add_progreso(root, progress.id))
         ]),
         Row([
             FilledButton("Pecho", on_click=lambda e: open_graphic(root, progress.pecho, "Progreso de Pecho")),

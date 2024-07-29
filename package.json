@@ -1,0 +1,11 @@
+{
+  "name": "fitargettool",
+  "version": "0.1.0",
+  "description": "FiTargetTool se encargará de proporcionar información acerca de las rutinas de ejecicio de cada cliente, además de poder editarlas y modificarlas. Con estos datos se mostrarán gráficas que proporcionarán mas información.",
+  "main": "main.py",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Luisdel Fonseca",
+  "license": "ISC"
+}

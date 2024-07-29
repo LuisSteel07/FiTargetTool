@@ -14,13 +14,14 @@ def get_rutine(id: int) -> Rutina:
     rutine = cur.execute(f"select * from Rutina where id = {id}").fetchone()
 
     return Rutina(id,
-                  json.loads(rutine[1])["ejers"],
+                  rutine[1],
                   json.loads(rutine[2])["ejers"],
                   json.loads(rutine[3])["ejers"],
                   json.loads(rutine[4])["ejers"],
                   json.loads(rutine[5])["ejers"],
                   json.loads(rutine[6])["ejers"],
-                  json.loads(rutine[7])["ejers"]
+                  json.loads(rutine[7])["ejers"],
+                  json.loads(rutine[8])["ejers"]
                   )
 
 
@@ -29,6 +30,7 @@ def get_progress(id: int) -> Progreso:
     cur = conn.cursor()
 
     progress = cur.execute(f"SELECT * from Progreso WHERE ID = {id}").fetchone()
+    conn.close()
 
     return Progreso(id,
                     json.loads(progress[1])["progress"],
@@ -53,9 +55,10 @@ def get_pesos(id: int) -> Peso:
     conn = sqlite3.connect("Clientes.db")
     cur = conn.cursor()
 
-    progress = cur.execute(f"SELECT * from Pesos WHERE ID = {id}").fetchone()
+    pesos = cur.execute(f"SELECT * from Pesos WHERE ID = {id}").fetchone()
+    conn.close()
 
-    return Peso(id, json.loads(progress[1])["pesos"])
+    return Peso(id, json.loads(pesos[1])["pesos"])
 
 
 def get_client(name: str) -> Cliente:
@@ -72,6 +75,7 @@ def get_client(name: str) -> Cliente:
     pesos = client[5]
     photo = client[6]
 
+    conn.close()
     return Cliente(client_id, name, age, get_rutine(rutine), get_progress(progress), get_pesos(pesos), photo)
 
 
@@ -79,11 +83,11 @@ def get_list_names() -> list[str]:
     conn = sqlite3.connect("Clientes.db")
     cur = conn.cursor()
 
-    names_db = cur.execute("select Nombre from Cliente;")
+    names_db = cur.execute("select Nombre from Cliente").fetchall()
+    conn.close()
 
     names = list()
-
-    for name in names_db.fetchall():
+    for name in names_db:
         names.append(name[0])
 
     return names
@@ -100,6 +104,7 @@ def get_all_data() -> list[Cliente]:
     for name in client:
         list_clients.append(get_client(name[0]))
 
+    conn.close()
     return list_clients
 
 
@@ -114,5 +119,6 @@ def get_list_id_rutines() -> list[int]:
     for i in ids:
         list_id.append(i[0])
 
+    conn.close()
     return list_id
 

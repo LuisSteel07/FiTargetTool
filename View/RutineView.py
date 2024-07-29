@@ -1,4 +1,7 @@
-from flet import Row, Text, ListView, MainAxisAlignment, FontWeight
+from flet import TextButton, AlertDialog, Row, Text, ListView, MainAxisAlignment, FontWeight, Page, DataTable, \
+    DataColumn, DataRow, DataCell
+
+from Controler.Controler import get_list_id_rutines, get_rutine
 from Model.Rutina import Rutina
 
 
@@ -41,7 +44,43 @@ def routine_data(rutine: Rutina) -> list[ListView]:
 
 def routine_view(rutine: Rutina) -> Row:
     return Row(
-        controls=routine_data(rutine),
+        routine_data(rutine),
         alignment=MainAxisAlignment.CENTER,
         width=200,
     )
+
+
+def get_rows_table_view() -> list[DataRow]:
+    rutines_id = get_list_id_rutines()
+    table_rows: list[DataRow] = []
+    rutines: list[Rutina] = []
+
+    for i in rutines_id:
+        rutines.append(get_rutine(i))
+
+    for rutine in rutines:
+        table_rows.append(DataRow([
+            DataCell(Text(f"{rutine.id}")),
+            DataCell(Text(f"{rutine.nombre}")),
+        ]))
+
+    return table_rows
+
+
+def routine_list_view(page: Page):
+    table = DataTable(
+        columns=[
+            DataColumn(Text("ID")),
+            DataColumn(Text("Nombre")),
+        ],
+        rows=get_rows_table_view()
+    )
+
+    alert = AlertDialog(
+        modal=True,
+        adaptive=True,
+        content=table,
+        actions=[TextButton("Cerrar", on_click=lambda e: page.close(alert))]
+    )
+
+    page.open(alert)

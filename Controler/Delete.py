@@ -11,6 +11,7 @@ def delete_client(client: Cliente):
     cur.execute(f"DELETE FROM Pesos WHERE id = {client.pesos.id}")
 
     conn.commit()
+    conn.close()
 
 
 def delete_routine(id: int):
@@ -19,6 +20,7 @@ def delete_routine(id: int):
 
     cur.execute(f"DELETE from Rutina where id = {id}")
     conn.commit()
+    conn.close()
 
 
 def delete_peso(id: int):
@@ -27,6 +29,7 @@ def delete_peso(id: int):
 
     cur.execute(f"DELETE from Pesos where id = {id}")
     conn.commit()
+    conn.close()
 
 
 def delete_progress(id: int):
@@ -35,3 +38,4 @@ def delete_progress(id: int):
 
     cur.execute(f"DELETE from Progreso where id = {id}")
     conn.commit()
+    conn.close()
