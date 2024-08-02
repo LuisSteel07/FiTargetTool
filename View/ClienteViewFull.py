@@ -3,7 +3,7 @@ from flet import (TextButton, colors, AutoCompleteSuggestion, Column, MainAxisAl
 from View.InfoClienteView import info_cliente_view
 from View.ProgressGraphics import collection_graphics_view, show_graphic
 from View.RutineView import routine_view
-from View.EditData import add_peso, add_rutine, change_rutine_view, change_client_view
+from View.EditData import add_peso, add_rutine, change_rutine_view, change_client_view, modify_rutine
 from Controler.Controler import get_client
 
 
@@ -25,6 +25,10 @@ def show_client_view(root: Page, data: AutoCompleteSuggestion) -> Column:
                                    style=ButtonStyle(color=colors.BLACK, overlay_color=colors.BLUE_GREY_800),
                                    on_click=lambda e: change_rutine_view(root, client.rutina.id)
                                    ),
+                        TextButton("Modificar Rutina",
+                                   style=ButtonStyle(color=colors.BLACK, overlay_color=colors.BLUE_GREY_800),
+                                   on_click=lambda e: modify_rutine(root, client.rutina, client.rutina.id)
+                                   )
                     ]),
                     routine_view(client.rutina)
                 ]),

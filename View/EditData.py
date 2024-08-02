@@ -2,8 +2,10 @@ import flet as ft
 from Controler.Controler import get_all_data, get_list_id_rutines
 from Controler.Create import create_client, create_routine
 from Controler.Delete import delete_client
-from Controler.Update import update_peso, update_progress, update_rutina, change_rutine, update_client_data
+from Controler.Update import update_peso, update_progress, update_rutina, change_rutine, update_client_data, \
+    update_full_routine
 from Model.Cliente import Cliente
+from Model.Rutina import Rutina
 from Model.Dia import Dia
 
 
@@ -117,7 +119,7 @@ def create_client_view(root: ft.Page):
     root.open(alert)
 
 
-def add_peso(root: ft.Page, id: int):
+def add_peso(root: ft.Page, peso_id: int):
     peso = ft.TextField(label="Agrega Peso")
 
     def validate():
@@ -125,7 +127,7 @@ def add_peso(root: ft.Page, id: int):
         if peso.value == "" or peso.value == " " or not peso.value.isdigit():
             alert_invalid_data(root)
         else:
-            update_peso(id, int(peso.value))
+            update_peso(peso_id, int(peso.value))
 
     alert = ft.AlertDialog(
         modal=True,
@@ -141,7 +143,7 @@ def add_peso(root: ft.Page, id: int):
     root.open(alert)
 
 
-def add_progreso(root: ft.Page, id: int):
+def add_progreso(root: ft.Page, progress_id: int):
     pecho = ft.TextField(tooltip="Valor", label="Valor Pecho: ")
     trapecio = ft.TextField(tooltip="Valor", label="Valor Trapecio: ")
     romboides = ft.TextField(tooltip="Valor", label="Valor Romboides: ")
@@ -163,7 +165,7 @@ def add_progreso(root: ft.Page, id: int):
         if pecho.value == "" or trapecio.value == "" or romboides.value == "" or dorsal.value == "" or espalda_baja.value == "" or biceps.value == "" or triceps.value == "" or ante_brazo.value == "" or del_posterior.value == "" or del_lateral.value == "" or del_anterior.value == "" or cuadriceps.value == "" or isq.value == "" or gluteos.value == "" or pantorrillas.value == "" or pecho.value == " " or trapecio.value == " " or romboides.value == " " or dorsal.value == " " or espalda_baja.value == " " or biceps.value == " " or triceps.value == " " or ante_brazo.value == " " or del_posterior.value == " " or del_lateral.value == " " or del_anterior.value == " " or cuadriceps.value == " " or isq.value == " " or gluteos.value == " " or pantorrillas.value == " ":
             alert_invalid_data(root)
         else:
-            update_progress(id, [
+            update_progress(progress_id, [
                 int(pecho.value),
                 int(trapecio.value),
                 int(romboides.value),
@@ -205,7 +207,7 @@ def add_progreso(root: ft.Page, id: int):
     root.open(alert)
 
 
-def add_rutine(root: ft.Page, id: int):
+def add_rutine(root: ft.Page, routine_id: int):
     dia_control = ft.Dropdown(
         options=[
             ft.dropdown.Option(Dia.LUNES.value),
@@ -226,7 +228,7 @@ def add_rutine(root: ft.Page, id: int):
         if new_ejercicio.value == "" or new_ejercicio.value == " " or dia_control.value is None:
             root.open(alert_invalid_data(root))
         else:
-            update_rutina(id, dia_control.value, new_ejercicio.value)
+            update_rutina(routine_id, dia_control.value, new_ejercicio.value)
 
     alert = ft.AlertDialog(
         modal=True,
@@ -273,8 +275,8 @@ def create_routine_view(root: ft.Page):
 def change_rutine_view(root: ft.Page, client_id: int):
     rutine = ft.Dropdown()
 
-    for id in get_list_id_rutines():
-        rutine.options.append(ft.dropdown.Option(str(id)))
+    for identifier in get_list_id_rutines():
+        rutine.options.append(ft.dropdown.Option(str(identifier)))
 
     def validate():
         root.close(alert)
@@ -319,6 +321,84 @@ def change_client_view(root: ft.Page, client_id: int):
         actions=[
             ft.TextButton("Cerrar", on_click=lambda e: root.close(alert)),
             ft.TextButton("Actualizar", on_click=lambda e: validacion())
+        ]
+    )
+
+    root.open(alert)
+
+
+def list_textfields_rutine(list_exercises, dia: str) -> list:
+    list_textfields = [ft.Text(value=dia, size=18, color=ft.colors.BLUE)]
+
+    if len(list_exercises) == 0:
+        list_textfields.append(ft.Text("Vacío", size=18, color=ft.colors.RED))
+    else:
+        for ejer in list_exercises:
+            list_textfields.append(ft.TextField(value=ejer, width=120))
+
+    return list_textfields
+
+
+def extract_routine_values(list_textfield: list[list[ft.TextField]], routine_id: int) -> Rutina:
+    routine: Rutina = Rutina(routine_id, "", [], [], [], [], [], [], [])
+    for day in range(0, 6):
+        for ejers in list_textfield[day]:
+            if ejers.value == "Vacío" or ejers.value == "" or ejers.value == " " or ejers.value == "Lunes" or ejers.value == "Martes" or ejers.value == "Miércoles" or ejers.value == "Jueves" or ejers.value == "Viernes" or ejers.value == "Sábado" or ejers.value == "Domingo":
+                continue
+            elif day == 0:
+                routine.lunes.append(ejers.value)
+            elif day == 1:
+                routine.martes.append(ejers.value)
+            elif day == 2:
+                routine.miercoles.append(ejers.value)
+            elif day == 3:
+                routine.jueves.append(ejers.value)
+            elif day == 4:
+                routine.viernes.append(ejers.value)
+            elif day == 5:
+                routine.sabado.append(ejers.value)
+            elif day == 6:
+                routine.domingo.append(ejers.value)
+
+    return routine
+
+
+def modify_rutine(root: ft.Page, rutine: Rutina, routine_id: int):
+    list_lunes = list_textfields_rutine(rutine.lunes, "Lunes")
+    list_martes: list[ft.TextField] = list_textfields_rutine(rutine.martes, "Martes")
+    list_miercoles: list[ft.TextField] = list_textfields_rutine(rutine.miercoles, "Miércoles")
+    list_jueves: list[ft.TextField] = list_textfields_rutine(rutine.jueves, "Jueves")
+    list_viernes: list[ft.TextField] = list_textfields_rutine(rutine.viernes, "Viernes")
+    list_sabado: list[ft.TextField] = list_textfields_rutine(rutine.sabado, "Sábado")
+    list_domingo: list[ft.TextField] = list_textfields_rutine(rutine.domingo, "Domingo")
+
+    content = ft.Container(
+        content=ft.Row([
+            ft.Column(list_lunes, width=130),
+            ft.Column(list_martes, width=130),
+            ft.Column(list_miercoles, width=130),
+            ft.Column(list_jueves, width=130),
+            ft.Column(list_viernes, width=130),
+            ft.Column(list_sabado, width=130),
+            ft.Column(list_domingo, width=130),
+        ]),
+        width=1000,
+        height=800
+    )
+
+    def validacion():
+        routine = extract_routine_values([list_lunes, list_martes, list_miercoles, list_jueves, list_viernes, list_sabado, list_domingo], routine_id)
+        update_full_routine(routine_id, routine)
+        root.close(alert)
+
+    alert = ft.AlertDialog(
+        modal=True,
+        adaptive=True,
+        title=ft.Text("Modificando Rutina Actual"),
+        content=content,
+        actions=[
+            ft.TextButton("Cerrar", on_click=lambda e: root.close(alert)),
+            ft.TextButton("Guardar", on_click=lambda e: validacion()),
         ]
     )
 

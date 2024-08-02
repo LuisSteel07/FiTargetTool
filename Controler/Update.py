@@ -234,3 +234,33 @@ def update_client_data(id: int, nombre: str, edad: int):
     cur.execute(query)
     conn.commit()
     conn.close()
+
+
+def update_routine_full_day(identifier: int, day: str, list_ejers: list[str]):
+    conn = sqlite3.connect("Clientes.db")
+    cur = conn.cursor()
+
+    routine_ejers = json.JSONEncoder().encode({"ejers": list_ejers})
+
+    cur.execute(f"UPDATE Rutina set {day} = '{routine_ejers}' where id = {identifier}")
+
+    conn.commit()
+    conn.close()
+
+
+def update_full_routine(identifier: int, routine: Rutina):
+    for day in range(0, 6):
+        if day == 0:
+            update_routine_full_day(identifier, Dia.LUNES.value, routine.lunes)
+        if day == 1:
+            update_routine_full_day(identifier, Dia.MARTES.value, routine.martes)
+        if day == 2:
+            update_routine_full_day(identifier, Dia.MIERCOLES.value, routine.miercoles)
+        if day == 3:
+            update_routine_full_day(identifier, Dia.JUEVES.value, routine.jueves)
+        if day == 4:
+            update_routine_full_day(identifier, Dia.VIERNES.value, routine.viernes)
+        if day == 5:
+            update_routine_full_day(identifier, Dia.SABADO.value, routine.sabado)
+        if day == 6:
+            update_routine_full_day(identifier, Dia.DOMINGO.value, routine.domingo)
