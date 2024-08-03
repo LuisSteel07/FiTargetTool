@@ -1,5 +1,10 @@
 .idea
 test
 
+build
+dist
+
+main.spec
 Controler/Clientes.sqbpro
 Controler/Clientes.db
+

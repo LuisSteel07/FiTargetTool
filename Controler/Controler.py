@@ -99,10 +99,18 @@ def get_all_data() -> list[Cliente]:
 
     list_clients: list[Cliente] = []
 
-    client = cur.execute("SELECT Nombre from Cliente").fetchall()
+    clients = cur.execute("SELECT * from Cliente").fetchall()
 
-    for name in client:
-        list_clients.append(get_client(name[0]))
+    for client in clients:
+        list_clients.append(Cliente(
+            client[0],
+            client[1],
+            client[2],
+            client[3],
+            client[4],
+            client[5],
+            client[6]
+        ))
 
     conn.close()
     return list_clients
@@ -122,3 +130,4 @@ def get_list_id_rutines() -> list[int]:
     conn.close()
     return list_id
 
+get_all_data()

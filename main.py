@@ -3,6 +3,7 @@ import flet as ft
 from View.AutoCompleteSuggestionData import auto_complete_suggestion_data
 from View.ClienteViewFull import show_client_view
 from View.EditData import create_client_view, create_routine_view
+from View.InfoClienteView import show_full_datatable
 from View.RutineView import routine_list_view
 
 
@@ -19,6 +20,7 @@ def main(page: ft.Page):
                 ft.IconButton(ft.icons.REFRESH, tooltip="Actualiza los valores guardados", on_click=lambda e:refresh_view()),
                 ft.TextButton("Crear Cliente", on_click=lambda e: create_client_view(page)),
                 ft.TextButton("Crear Rutina", on_click=lambda e: create_routine_view(page)),
+                ft.TextButton("Ver Clientes", tooltip="Muestra una lista de todos los clientes", on_click=lambda e: show_full_datatable(page)),
                 ft.TextButton("Ver Rutina", tooltip="Muestra una lista de las Rutinas creadas", on_click=lambda e: routine_list_view(page)),
             ]),
             data_view,
