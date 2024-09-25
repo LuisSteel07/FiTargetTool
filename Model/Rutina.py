@@ -1,5 +1,8 @@
+from Model.Ejercicios import Ejercicios
+
+
 class Rutina:
-    def __init__(self, _id: int, _nombre: str, _lunes: list[str], _martes: list[str], _miercoles: list[str], _jueves: list[str], _viernes: list[str], _sabado: list[str], _domingo: list[str]):
+    def __init__(self, _id: int, _nombre: str, _lunes: list[Ejercicios], _martes: list[Ejercicios], _miercoles: list[Ejercicios], _jueves: list[Ejercicios], _viernes: list[Ejercicios], _sabado: list[Ejercicios], _domingo: list[Ejercicios]):
         self.id = _id
         self.nombre = _nombre
         self.lunes = _lunes

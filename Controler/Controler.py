@@ -1,6 +1,7 @@
 import sqlite3
 import json
 
+from Model.Ejercicios import Ejercicios
 from Model.Cliente import Cliente
 from Model.Peso import Peso
 from Model.Rutina import Rutina
@@ -13,15 +14,23 @@ def get_rutine(id: int) -> Rutina:
 
     rutine = cur.execute(f"select * from Rutina where id = {id}").fetchone()
 
+    list_ejers_days = list()
+
+    for e in range(2, 9):
+        ejers_list = list()
+        for ejers in json.loads(rutine[e])["ejers"]:
+            ejers_list.append(Ejercicios(ejers["name"], ejers["reps"], ejers["weights"]))
+        list_ejers_days.append(ejers_list)
+
     return Rutina(id,
                   rutine[1],
-                  json.loads(rutine[2])["ejers"],
-                  json.loads(rutine[3])["ejers"],
-                  json.loads(rutine[4])["ejers"],
-                  json.loads(rutine[5])["ejers"],
-                  json.loads(rutine[6])["ejers"],
-                  json.loads(rutine[7])["ejers"],
-                  json.loads(rutine[8])["ejers"]
+                  list_ejers_days[0],
+                  list_ejers_days[1],
+                  list_ejers_days[2],
+                  list_ejers_days[3],
+                  list_ejers_days[4],
+                  list_ejers_days[5],
+                  list_ejers_days[6],
                   )
 
 
@@ -129,5 +138,3 @@ def get_list_id_rutines() -> list[int]:
 
     conn.close()
     return list_id
-
-get_all_data()

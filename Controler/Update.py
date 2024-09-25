@@ -1,9 +1,12 @@
 import sqlite3
 import json
+
+from Controler.Controler import get_rutine
 from Model.Dia import Dia
 from Model.Peso import Peso
 from Model.Progreso import Progreso
 from Model.Rutina import Rutina
+from Model.Ejercicios import Ejercicios
 
 
 def update_client(id: int, nombre: str, edad: int, rutina: int, progreso: int, pesos: int, foto: str):
@@ -20,23 +23,12 @@ def update_client(id: int, nombre: str, edad: int, rutina: int, progreso: int, p
     conn.close()
 
 
-def update_rutina(id: int, day: str, ejercise: str):
+def update_rutina(id: int, day: str, ejercise: Ejercicios):
     new_rutina = 0
     conn = sqlite3.connect("Clientes.db")
     cur = conn.cursor()
 
-    fetch_data = cur.execute(f"select * from Rutina where id = {id}").fetchone()
-
-    rutina = Rutina(id,
-                    fetch_data[1],
-                    json.loads(fetch_data[2])["ejers"],
-                    json.loads(fetch_data[3])["ejers"],
-                    json.loads(fetch_data[4])["ejers"],
-                    json.loads(fetch_data[5])["ejers"],
-                    json.loads(fetch_data[6])["ejers"],
-                    json.loads(fetch_data[7])["ejers"],
-                    json.loads(fetch_data[8])["ejers"]
-                    )
+    rutina = get_rutine(id)
 
     if day == Dia.LUNES.value:
         rutina.lunes.append(ejercise)
@@ -236,7 +228,7 @@ def update_client_data(id: int, nombre: str, edad: int):
     conn.close()
 
 
-def update_routine_full_day(identifier: int, day: str, list_ejers: list[str]):
+def update_routine_full_day(identifier: int, day: str, list_ejers: list[Ejercicios]):
     conn = sqlite3.connect("Clientes.db")
     cur = conn.cursor()
 

@@ -30,7 +30,7 @@ def show_client_view(root: Page, data: AutoCompleteSuggestion) -> Column:
                                    on_click=lambda e: modify_rutine(root, client.rutina, client.rutina.id)
                                    )
                     ]),
-                    routine_view(client.rutina)
+                    routine_view(client.rutina, root)
                 ]),
                 margin=10,
                 padding=20,

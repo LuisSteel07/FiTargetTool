@@ -208,6 +208,10 @@ def add_progreso(root: ft.Page, progress_id: int):
 
 
 def add_rutine(root: ft.Page, routine_id: int):
+    root.snack_bar = ft.SnackBar(
+        ft.Text("Contenido guardado...")
+    )
+
     dia_control = ft.Dropdown(
         options=[
             ft.dropdown.Option(Dia.LUNES.value),
@@ -224,11 +228,13 @@ def add_rutine(root: ft.Page, routine_id: int):
     new_ejercicio = ft.TextField(label="Nuevo Ejercicio", tooltip="Diga el nuevo ejercicio a agregar")
 
     def validate():
-        root.close(alert)
         if new_ejercicio.value == "" or new_ejercicio.value == " " or dia_control.value is None:
+            root.close(alert)
             root.open(alert_invalid_data(root))
         else:
             update_rutina(routine_id, dia_control.value, new_ejercicio.value)
+            root.snack_bar.open = True
+            root.update()
 
     alert = ft.AlertDialog(
         modal=True,
