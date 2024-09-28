@@ -1,5 +1,5 @@
 from flet import TextButton, AlertDialog, Row, Text, ListView, MainAxisAlignment, FontWeight, Page, DataTable, \
-    DataColumn, DataRow, DataCell, CrossAxisAlignment, ElevatedButton
+    DataColumn, DataRow, DataCell, CrossAxisAlignment, ElevatedButton, IconButton, icons
 
 from Controler.Controler import get_list_id_rutines, get_rutine
 from Model.Ejercicios import Ejercicios
@@ -44,6 +44,20 @@ class PanelExercise:
         )
 
         root.open(alert)
+
+
+class RowActionRoutine:
+    def __init__(self, num, name, root: Page):
+        self.num = num,
+        self.name = name,
+        self.root = root
+
+    def get_datarow(self):
+        return DataRow([
+            DataCell(Text(f"{self.num}")),
+            DataCell(Text(self.name[0])),
+            DataCell(IconButton(icons.ADD, icon_size=25, on_click=lambda e: self.root.go("/routine/12")))
+        ])
 
 
 def routine_data(rutine: Rutina, root: Page) -> list[ListView]:
@@ -92,7 +106,7 @@ def routine_view(rutine: Rutina, root: Page) -> Row:
     )
 
 
-def get_rows_table_view() -> list[DataRow]:
+def get_rows_table_view(root) -> list[DataRow]:
     rutines_id = get_list_id_rutines()
     table_rows: list[DataRow] = []
     rutines: list[Rutina] = []
@@ -101,10 +115,7 @@ def get_rows_table_view() -> list[DataRow]:
         rutines.append(get_rutine(i))
 
     for rutine in rutines:
-        table_rows.append(DataRow([
-            DataCell(Text(f"{rutine.id}")),
-            DataCell(Text(f"{rutine.nombre}")),
-        ]))
+        table_rows.append(RowActionRoutine(rutine.id, rutine.nombre, root).get_datarow())
 
     return table_rows
 
@@ -114,8 +125,9 @@ def routine_list_view(page: Page):
         columns=[
             DataColumn(Text("ID")),
             DataColumn(Text("Nombre")),
+            DataColumn(Text("Editar")),
         ],
-        rows=get_rows_table_view()
+        rows=get_rows_table_view(page)
     )
 
     alert = AlertDialog(

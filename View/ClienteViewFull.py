@@ -17,10 +17,10 @@ def show_client_view(root: Page, data: AutoCompleteSuggestion) -> Column:
                 content=Column([
                     Row([
                         Text(f"{client.rutina.nombre}", size=20, weight=FontWeight.BOLD),
-                        TextButton("Agregar Ejercicio",
-                                   style=ButtonStyle(color=colors.BLACK, overlay_color=colors.BLUE_GREY_800),
-                                   on_click=lambda e: add_rutine(root, client.rutina.id)
-                                   ),
+                        # TextButton("Agregar Ejercicio",
+                        #            style=ButtonStyle(color=colors.BLACK, overlay_color=colors.BLUE_GREY_800),
+                        #            on_click=lambda e: add_rutine(root, client.rutina.id)
+                        #            ),
                         TextButton("Cambiar Rutina",
                                    style=ButtonStyle(color=colors.BLACK, overlay_color=colors.BLUE_GREY_800),
                                    on_click=lambda e: change_rutine_view(root, client.rutina.id)

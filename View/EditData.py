@@ -5,6 +5,7 @@ from Controler.Delete import delete_client
 from Controler.Update import update_peso, update_progress, update_rutina, change_rutine, update_client_data, \
     update_full_routine
 from Model.Cliente import Cliente
+from Model.Ejercicios import Ejercicios
 from Model.Rutina import Rutina
 from Model.Dia import Dia
 
@@ -208,50 +209,38 @@ def add_progreso(root: ft.Page, progress_id: int):
 
 
 def add_rutine(root: ft.Page, routine_id: int):
-    root.snack_bar = ft.SnackBar(
-        ft.Text("Contenido guardado...")
-    )
 
-    dia_control = ft.Dropdown(
-        options=[
-            ft.dropdown.Option(Dia.LUNES.value),
-            ft.dropdown.Option(Dia.MARTES.value),
-            ft.dropdown.Option(Dia.MIERCOLES.value),
-            ft.dropdown.Option(Dia.JUEVES.value),
-            ft.dropdown.Option(Dia.VIERNES.value),
-            ft.dropdown.Option(Dia.SABADO.value),
-            ft.dropdown.Option(Dia.DOMINGO.value),
-        ],
-        width=140,
 
-    )
-    new_ejercicio = ft.TextField(label="Nuevo Ejercicio", tooltip="Diga el nuevo ejercicio a agregar")
 
-    def validate():
-        if new_ejercicio.value == "" or new_ejercicio.value == " " or dia_control.value is None:
-            root.close(alert)
-            root.open(alert_invalid_data(root))
-        else:
-            update_rutina(routine_id, dia_control.value, new_ejercicio.value)
-            root.snack_bar.open = True
-            root.update()
 
-    alert = ft.AlertDialog(
-        modal=True,
-        adaptive=True,
-        title=ft.Text("Agregando Ejercicio"),
-        content=ft.Column([
-            new_ejercicio,
-            dia_control
-        ]),
-        actions=[
-            ft.TextButton("Cerrar", on_click=lambda e: root.close(alert)),
-            ft.TextButton("Agregar", on_click=lambda e: validate())
-        ]
-    )
+    print("perro")
 
-    root.open(alert)
-    root.update()
+
+
+
+
+    # def validate():
+    #     if new_ejercicio.value == "" or new_ejercicio.value == " " or dia_control.value is None or cant_tandas.value == "0":
+    #         root.open(alert_invalid_data(root))
+    #     else:
+    #         list_reps = list()
+    #         list_weights = list()
+    #         for e in range(0, len(list_values_reps)):
+    #             list_reps.append(int(list_values_reps[e].value))
+    #             list_weights.append(float(list_values_weights[e].value))
+    #
+    #         update_rutina(routine_id, dia_control.value, Ejercicios(new_ejercicio.value, list_reps, list_weights))
+    #         root.snack_bar.open = True
+    #         root.update()
+
+    # return ft.Column([
+    #     new_ejercicio,
+    #     dia_control,
+    #     cant_tandas,
+    #     ft.Row(list_values_reps),
+    #     ft.Row(list_values_weights),
+    #     ft.FilledButton("Guardar", ft.icons.CREATE, on_click=lambda e: validate())
+    # ])
 
 
 def create_routine_view(root: ft.Page):
@@ -393,7 +382,8 @@ def modify_rutine(root: ft.Page, rutine: Rutina, routine_id: int):
     )
 
     def validacion():
-        routine = extract_routine_values([list_lunes, list_martes, list_miercoles, list_jueves, list_viernes, list_sabado, list_domingo], routine_id)
+        routine = extract_routine_values(
+            [list_lunes, list_martes, list_miercoles, list_jueves, list_viernes, list_sabado, list_domingo], routine_id)
         update_full_routine(routine_id, routine)
         root.close(alert)
 
