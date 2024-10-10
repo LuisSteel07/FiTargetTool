@@ -2,12 +2,10 @@ import flet as ft
 from Controler.Controler import get_all_data, get_list_id_rutines
 from Controler.Create import create_client, create_routine
 from Controler.Delete import delete_client
-from Controler.Update import update_peso, update_progress, update_rutina, change_rutine, update_client_data, \
+from Controler.Update import update_peso, update_progress, change_rutine, update_client_data, \
     update_full_routine
 from Model.Cliente import Cliente
-from Model.Ejercicios import Ejercicios
 from Model.Rutina import Rutina
-from Model.Dia import Dia
 
 
 def alert_invalid_data(root: ft.Page) -> ft.AlertDialog:
@@ -208,41 +206,6 @@ def add_progreso(root: ft.Page, progress_id: int):
     root.open(alert)
 
 
-def add_rutine(root: ft.Page, routine_id: int):
-
-
-
-
-    print("perro")
-
-
-
-
-
-    # def validate():
-    #     if new_ejercicio.value == "" or new_ejercicio.value == " " or dia_control.value is None or cant_tandas.value == "0":
-    #         root.open(alert_invalid_data(root))
-    #     else:
-    #         list_reps = list()
-    #         list_weights = list()
-    #         for e in range(0, len(list_values_reps)):
-    #             list_reps.append(int(list_values_reps[e].value))
-    #             list_weights.append(float(list_values_weights[e].value))
-    #
-    #         update_rutina(routine_id, dia_control.value, Ejercicios(new_ejercicio.value, list_reps, list_weights))
-    #         root.snack_bar.open = True
-    #         root.update()
-
-    # return ft.Column([
-    #     new_ejercicio,
-    #     dia_control,
-    #     cant_tandas,
-    #     ft.Row(list_values_reps),
-    #     ft.Row(list_values_weights),
-    #     ft.FilledButton("Guardar", ft.icons.CREATE, on_click=lambda e: validate())
-    # ])
-
-
 def create_routine_view(root: ft.Page):
     name = ft.TextField(label="Nombre de la Rutina")
 
@@ -359,7 +322,7 @@ def extract_routine_values(list_textfield: list[list[ft.TextField]], routine_id:
 
 
 def modify_rutine(root: ft.Page, rutine: Rutina, routine_id: int):
-    list_lunes = list_textfields_rutine(rutine.lunes, "Lunes")
+    list_lunes: list[ft.TextField] = list_textfields_rutine(rutine.lunes, "Lunes")
     list_martes: list[ft.TextField] = list_textfields_rutine(rutine.martes, "Martes")
     list_miercoles: list[ft.TextField] = list_textfields_rutine(rutine.miercoles, "Miércoles")
     list_jueves: list[ft.TextField] = list_textfields_rutine(rutine.jueves, "Jueves")

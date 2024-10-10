@@ -4,7 +4,7 @@
   "description": "FiTargetTool se encargará de proporcionar información acerca de las rutinas de ejecicio de cada cliente, además de poder editarlas y modificarlas. Con estos datos se mostrarán gráficas que proporcionarán mas información.",
   "main": "main.py",
   "scripts": {
-    "dev": "flet main.py",
+    "dev": "nodemon flet main.py",
     "build": "flet pack main.py"
   },
   "author": "Luisdel Fonseca",

@@ -3,7 +3,7 @@ from flet import (TextButton, colors, AutoCompleteSuggestion, Column, MainAxisAl
 from View.InfoClienteView import info_cliente_view
 from View.ProgressGraphics import collection_graphics_view, show_graphic
 from View.RutineView import routine_view
-from View.EditData import add_peso, add_rutine, change_rutine_view, change_client_view, modify_rutine
+from View.EditData import add_peso, change_rutine_view, change_client_view, modify_rutine
 from Controler.Controler import get_client
 
 

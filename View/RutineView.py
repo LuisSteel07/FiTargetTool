@@ -56,7 +56,7 @@ class RowActionRoutine:
         return DataRow([
             DataCell(Text(f"{self.num}")),
             DataCell(Text(self.name[0])),
-            DataCell(IconButton(icons.ADD, icon_size=25, on_click=lambda e: self.root.go("/routine/12")))
+            DataCell(IconButton(icons.ADD, icon_size=25, on_click=lambda e: self.root.go(f"/routine/1")))
         ])
 
 

@@ -1,11 +1,11 @@
 import flet as ft
 
-from Model.Dia import Dia
 from View.AutoCompleteSuggestionData import auto_complete_suggestion_data
 from View.ClienteViewFull import show_client_view
-from View.EditData import create_client_view, create_routine_view, add_rutine
+from View.EditData import create_client_view, create_routine_view
 from View.InfoClienteView import show_full_datatable
 from View.RutineView import routine_list_view
+from View.RoutineRouteView import RoutineRouteView
 
 
 def main(page: ft.Page):
@@ -21,60 +21,9 @@ def main(page: ft.Page):
         )
     )
 
-    list_values_reps = []
-    list_values_weights = []
-
-    dia_control = ft.Dropdown(
-        options=[
-            ft.dropdown.Option(Dia.LUNES.value),
-            ft.dropdown.Option(Dia.MARTES.value),
-            ft.dropdown.Option(Dia.MIERCOLES.value),
-            ft.dropdown.Option(Dia.JUEVES.value),
-            ft.dropdown.Option(Dia.VIERNES.value),
-            ft.dropdown.Option(Dia.SABADO.value),
-            ft.dropdown.Option(Dia.DOMINGO.value),
-        ],
-        width=140,
-    )
-
-    new_ejercicio = ft.TextField(label="Nuevo Ejercicio", tooltip="Diga el nuevo ejercicio a agregar")
-
-    cant_tandas = ft.TextField(
-        label="Cantidad de Tandas",
-        tooltip="Diga la cantidad de tandas del ejercicio",
-        value="0",
-        input_filter=ft.InputFilter(allow=True, regex_string=r"^[0-8]*$", replacement_string="0"),
-        on_change=lambda e: on_change_tandas()
-    )
-
-    def on_change_tandas():
-        try:
-            if int(cant_tandas.value) > 0:
-                print("perro")
-                list_values_reps.clear()
-                list_values_weights.clear()
-                for e in range(0, int(cant_tandas.value)):
-                    list_values_reps.append(ft.TextField(
-                        label="Cantidad de Reps.",
-                        tooltip="Diga la cantidad de reps del ejercicio",
-                        value="0",
-                        width=100,
-                        input_filter=ft.InputFilter(allow=True, regex_string=r"^[0-9999]*$", replacement_string="0")
-                    ))
-                    list_values_weights.append(ft.TextField(
-                        label="Cantidad de Peso.",
-                        tooltip="Diga la cantidad de peso del ejercicio",
-                        value="0",
-                        width=100,
-                        input_filter=ft.InputFilter(allow=True, regex_string=r"^[0-99999999]*$", replacement_string="0")
-                    ))
-        except ValueError as e:
-            print(f"Excepcion asegurada ((ValueError)) --> {e}")
-        page.go(page.route)
-
     def route_change(route):
-        page.update()
         page.views.clear()
+        page.update()
 
         troute = ft.TemplateRoute(page.route)
 
@@ -114,29 +63,8 @@ def main(page: ft.Page):
             )
         )
         if troute.match("/routine/:id"):
-            page.views.append(
-                ft.View(
-                    route="/routine",
-                    controls=[
-                        ft.Row([
-                            ft.IconButton(ft.icons.ARROW_BACK, icon_size=25, on_click=lambda e: page.views.pop())
-                        ]),
-                        ft.Row([
-                            ft.Column([
-                                ft.Text("Wassaaaaaaa")
-                            ]),
-                            ft.Column([
-                                new_ejercicio,
-                                dia_control,
-                                cant_tandas,
-                                ft.Row(list_values_reps),
-                                ft.Row(list_values_weights),
-                                ft.FilledButton("Guardar", ft.icons.CREATE)
-                            ])
-                        ])
-                    ]
-                )
-            )
+            page.views.append(RoutineRouteView(page, troute.id).show_view())
+
         page.update()
 
     def view_change(data: ft.AutoCompleteSuggestion):
@@ -174,8 +102,8 @@ def main(page: ft.Page):
     ]
 
     def view_pop(view):
-        page.views.pop()
-        page.go(page.views[-1].route)
+        page.views.clear()
+        page.go("/")
 
     page.on_route_change = route_change
     page.on_view_pop = view_pop
