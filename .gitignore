@@ -1,4 +1,5 @@
 .idea
+.venv
 test
 
 # Build program result

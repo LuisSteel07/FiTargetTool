@@ -1,5 +1,7 @@
 import flet as ft
 
+from Controler.Update import update_rutina
+from Model.Ejercicios import Ejercicios
 from Model.Dia import Dia
 
 
@@ -44,7 +46,7 @@ class RoutineRouteView:
                         self.cant_tandas,
                         self.list_values_reps,
                         self.list_values_weights,
-                        ft.FilledButton("Guardar", ft.icons.CREATE)
+                        ft.FilledButton("Guardar", ft.icons.CREATE, on_click=lambda e: self.save_instance())
                     ])
                 ])
             ]
@@ -76,3 +78,20 @@ class RoutineRouteView:
             self.list_values_weights.controls.clear()
             self.page.update()
             print(f"Excepcion asegurada ((ValueError)) --> {e}")
+
+    def create_ejercicio_object(self) -> Ejercicios:
+        list_reps: list[int] = []
+        list_weights: list[float] = []
+
+        for rep in self.list_values_reps.controls:
+            list_reps.append(int(rep.value))
+
+        for weight in self.list_values_weights.controls:
+            list_weights.append(float(weight.value))
+
+        return Ejercicios(self.new_ejercicio.value, list_reps, list_weights)
+
+    def save_instance(self):
+        ejercicio = self.create_ejercicio_object()
+        update_rutina(self.routine_id, self.dia_control.value, ejercicio)
+        self.page.go("/")

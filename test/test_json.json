@@ -1,1 +1,6 @@
-[{"id": 1, "name": "Pedro", "edad": 45}, {"id": 4, "name": "Pedro", "edad": 34}]
+{
+  "ejers": [
+    "{\"name\": \"perro\", \"reps\": [12, 12, 12, 12], \"weights\": [12, 23, 234, 23]}",
+    "{\"name\": \"gato\", \"reps\": [12, 12, 12, 12], \"weights\": [12, 23, 234, 23]}"
+  ]
+}

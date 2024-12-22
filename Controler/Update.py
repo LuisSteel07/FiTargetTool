@@ -7,6 +7,7 @@ from Model.Peso import Peso
 from Model.Progreso import Progreso
 from Model.Rutina import Rutina
 from Model.Ejercicios import Ejercicios
+from Utils.generate_models_json import generate_models_ejercicio_json
 
 
 def update_client(id: int, nombre: str, edad: int, rutina: int, progreso: int, pesos: int, foto: str):
@@ -24,7 +25,7 @@ def update_client(id: int, nombre: str, edad: int, rutina: int, progreso: int, p
 
 
 def update_rutina(id: int, day: str, ejercise: Ejercicios):
-    new_rutina = 0
+    new_rutina: str = ""
     conn = sqlite3.connect("Clientes.db")
     cur = conn.cursor()
 
@@ -32,25 +33,25 @@ def update_rutina(id: int, day: str, ejercise: Ejercicios):
 
     if day == Dia.LUNES.value:
         rutina.lunes.append(ejercise)
-        new_rutina = json.JSONEncoder().encode({"ejers": rutina.lunes})
+        new_rutina = json.dumps({"ejers": generate_models_ejercicio_json(rutina.lunes)})
     elif day == Dia.MARTES.value:
         rutina.martes.append(ejercise)
-        new_rutina = json.JSONEncoder().encode({"ejers": rutina.martes})
+        new_rutina = json.dumps({"ejers": generate_models_ejercicio_json(rutina.martes)})
     elif day == Dia.MIERCOLES.value:
         rutina.miercoles.append(ejercise)
-        new_rutina = json.JSONEncoder().encode({"ejers": rutina.miercoles})
+        new_rutina = json.dumps({"ejers": generate_models_ejercicio_json(rutina.miercoles)})
     elif day == Dia.JUEVES.value:
         rutina.jueves.append(ejercise)
-        new_rutina = json.JSONEncoder().encode({"ejers": rutina.jueves})
+        new_rutina = json.dumps({"ejers": generate_models_ejercicio_json(rutina.jueves)})
     elif day == Dia.VIERNES.value:
         rutina.viernes.append(ejercise)
-        new_rutina = json.JSONEncoder().encode({"ejers": rutina.viernes})
+        new_rutina = json.dumps({"ejers": generate_models_ejercicio_json(rutina.viernes)})
     elif day == Dia.SABADO.value:
         rutina.sabado.append(ejercise)
-        new_rutina = json.JSONEncoder().encode({"ejers": rutina.sabado})
+        new_rutina = json.dumps({"ejers": generate_models_ejercicio_json(rutina.sabado)})
     elif day == Dia.DOMINGO.value:
         rutina.domingo.append(ejercise)
-        new_rutina = json.JSONEncoder().encode({"ejers": rutina.domingo})
+        new_rutina = json.dumps({"ejers": generate_models_ejercicio_json(rutina.domingo)})
 
     cur.execute(f"UPDATE Rutina set {day} = '{new_rutina}' where id = {id}")
     conn.commit()
