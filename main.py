@@ -4,6 +4,7 @@ from View.AutoCompleteSuggestionData import auto_complete_suggestion_data
 from View.ClienteViewFull import show_client_view
 from View.EditData import create_client_view, create_routine_view
 from View.InfoClienteView import show_full_datatable
+from View.RoutineRouteUpdateView import RoutineRouteUpdateView
 from View.RutineView import routine_list_view
 from View.RoutineRouteView import RoutineRouteView
 
@@ -64,6 +65,8 @@ def main(page: ft.Page):
         )
         if troute.match("/routine/:id"):
             page.views.append(RoutineRouteView(page, troute.id).show_view())
+        if troute.match("/routine_update/:id"):
+            page.views.append(RoutineRouteUpdateView(page, troute.id).show_view())
 
         page.update()
 

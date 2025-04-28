@@ -233,7 +233,7 @@ def update_routine_full_day(identifier: int, day: str, list_ejers: list[Ejercici
     conn = sqlite3.connect("Clientes.db")
     cur = conn.cursor()
 
-    routine_ejers = json.JSONEncoder().encode({"ejers": list_ejers})
+    routine_ejers = json.JSONEncoder().encode({"ejers": generate_models_ejercicio_json(list_ejers)})
 
     cur.execute(f"UPDATE Rutina set {day} = '{routine_ejers}' where id = {identifier}")
 

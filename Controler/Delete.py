@@ -39,3 +39,4 @@ def delete_progress(id: int):
     cur.execute(f"DELETE from Progreso where id = {id}")
     conn.commit()
     conn.close()
+

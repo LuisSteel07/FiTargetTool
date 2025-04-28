@@ -25,6 +25,10 @@ def show_client_view(root: Page, data: AutoCompleteSuggestion) -> Column:
                                    style=ButtonStyle(color=colors.BLACK, overlay_color=colors.BLUE_GREY_800),
                                    on_click=lambda e: change_rutine_view(root, client.rutina.id)
                                    ),
+                        TextButton("Eliminar Ejercicio",
+                                   style=ButtonStyle(color=colors.BLACK, overlay_color=colors.BLUE_GREY_800),
+                                   on_click=lambda e: root.go(f"/routine_update/{client.rutina.id}"),
+                                   ),
                     ]),
                     routine_view(client.rutina, root)
                 ]),

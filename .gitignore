@@ -1,6 +1,7 @@
 .idea
 .venv
 test
+storage
 
 # Build program result
 build
