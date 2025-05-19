@@ -87,27 +87,8 @@ En este archivo encontraremos funciones para el uso de los componentes "AutoComp
 | auto_complete_suggestion_data       | Esta funcion retorna un objeto de la clase AutoCompleteSuggestion, el cual contiene una lista de los posibles nombres de usuario que se pueden insertar para buscar. |
 | auto_complete_suggestion_id_rutines | Esta funcion retorna un objeto de la clase AutoCompleteSuggestion, el cual contiene una lista de los posibles id de rutinas que se pueden insertar para buscar.      |
 
-### ProgressGraphics.py
-En este archivo estan las funciones que facilian el muestreo de los graficos de los registros de progresos de los clientes ingresados en la DB.
-
-| Funcion                     | Descripcion                                                                                                                                           |
-|-----------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
-| open_graphic                | Esta funcion se encarga de cargar el grafico en un AlertDialog para poder ser visualizado.                                                            |
-| show_graphic                | Esta funcion retorna el grafico totalmente construido.                                                                                                |
-| create_linechartdata_points | Esta funcion crea la lista de valores que se van a ir viendo punto por punto.                                                                         |
-| create_left_chart_axis      | Esta funcion retorna los elementos en la parte izquierda de la grafica.                                                                               |
-| create_bottom_chart_axis    | Esta funcion retorna los elementos en la parte inferior de la grafica.                                                                                |
-| collection_graphics_view    | Esta funcion muestra una seccion la cual muestra informacion de cada grupo muscular a traves de las graficas, ademas de poder editarlas directamente. |
-
-### InfoClienteView.py
-En este archivo se encontraran funciones las cual nos serviran para usar componentes para mostrar informacion de los clientes guardados en la DB.
-
-| Funcion                  | Descripcion                                                                                                        |
-|--------------------------|--------------------------------------------------------------------------------------------------------------------|
-| info_cliente_view        | Funcion que retorna un componente el cual muestra el nombre y edad del cliente.                                    |
-| create_datatable_clients | Funcion que crea una tabla donde muestra la informacion de los clientes.                                           |
-| rows_table_clients       | Funcion que crea las filas de la tabla creada en la funcion "create_datatable_clients".                            |
-| show_full_datatable      | Esta funcion muestra un AlertDialog, donde su contenido es la tabla retornada por la funcion "rows_table_clients". |
+### ClienteViewFull.py
+Este archivo contiene la funcion unica "show_client_view", la cual retorna una columna que contiene la unico de muchas informaciones y formas de interacciones proporcionadas por otras funciones, mostrando la rutina completa y acciones como cambiarla o eliminar u editar algun ejercicio. 
 
 ### EditData.py
 Este archivo cuenta con funciones que ejecutan AlertDialogs los cuales ayudan a editar datos, ya sea de los clientes o de algun otro elemento.
@@ -126,4 +107,45 @@ Este archivo cuenta con funciones que ejecutan AlertDialogs los cuales ayudan a 
 | list_textfields_rutine        | Esta funcion permite retornar una columna de la tabla dada en "modify_rutine", esta columna contiene el dia y luego los ejercicios de ese dia en forma de TextFields, osea que se pueden modificar ahi mismo, sino tiene ningun ejercicio ese dia, se agrega un texto unico diciendo "Vacio". |
 | extract_routine_values        | Esta funcion extrae los valores de los TextFields de la tabla y los convierte en una instancia de la clase Rutina, donde ya en la funcion "modify_rutine" se hace uso de "update_full_routine" para actualizar la rutina por los nuevos valores.                                              |
 
+### InfoClienteView.py
+En este archivo se encontraran funciones las cual nos serviran para usar componentes para mostrar informacion de los clientes guardados en la DB.
 
+| Funcion                  | Descripcion                                                                                                        |
+|--------------------------|--------------------------------------------------------------------------------------------------------------------|
+| info_cliente_view        | Funcion que retorna un componente el cual muestra el nombre y edad del cliente.                                    |
+| create_datatable_clients | Funcion que crea una tabla donde muestra la informacion de los clientes.                                           |
+| rows_table_clients       | Funcion que crea las filas de la tabla creada en la funcion "create_datatable_clients".                            |
+| show_full_datatable      | Esta funcion muestra un AlertDialog, donde su contenido es la tabla retornada por la funcion "rows_table_clients". |
+
+### ProgressGraphics.py
+En este archivo estan las funciones que facilian el muestreo de los graficos de los registros de progresos de los clientes ingresados en la DB.
+
+| Funcion                     | Descripcion                                                                                                                                           |
+|-----------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
+| open_graphic                | Esta funcion se encarga de cargar el grafico en un AlertDialog para poder ser visualizado.                                                            |
+| show_graphic                | Esta funcion retorna el grafico totalmente construido.                                                                                                |
+| create_linechartdata_points | Esta funcion crea la lista de valores que se van a ir viendo punto por punto.                                                                         |
+| create_left_chart_axis      | Esta funcion retorna los elementos en la parte izquierda de la grafica.                                                                               |
+| create_bottom_chart_axis    | Esta funcion retorna los elementos en la parte inferior de la grafica.                                                                                |
+| collection_graphics_view    | Esta funcion muestra una seccion la cual muestra informacion de cada grupo muscular a traves de las graficas, ademas de poder editarlas directamente. |
+
+
+
+
+
+### RoutineRouteUpdateView.py
+En este archivo se encuentra la clase "RoutineRouteUpdateView", donde esta proporciona una View en la ruta "/routine_update" la cual permite a traves de su interfaz la modificacion de la lista de ejercicios en un dia determinado.
+
+### RoutineRouteView.py
+En este archivo se encuentra la clase "RoutineRouteView", donde esta permite la creacion de una instancia de la clase "Ejercicio", donde el mismo sera agregado a un dia determina de la rutina del cliente.
+
+### RoutineView.py
+En este archivo se encuentra varias funciones para la interaccion con rutinas.
+El uso de las clases "RowActionRoutine" y "PanelExercise" ayuda a que no se dupliquen los elementos mostrados.
+
+| Funcion             | Descripcion                                                                                                                                                                                                                   |
+|---------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| routine_list_view   | Esta funcion muestra una lista de las rutinas creadas con su id.                                                                                                                                                              |
+| get_rows_table_view | Esta funcion crea las filas que se muestran en la tabla retornada por la funcion "routine_list_view", haciendo uso de la clase "RowActionRoutine" ubicada en el mismo archivo.                                                |
+| routine_data        | Esta funcion crea una lista entre todos los dias, donde haciendo uso de la clase "PanelExercise" se colocan "ElevatedButton" en cada ejercicio para poder mostrar informacion a traves de un "AlertDialog" de cada ejercicio. |
+| routine_view        | Esta funcion retorna un "Row" con el contenido generado por la funcion "routine_data", mostrandolo de manera organizada.                                                                                                      |
