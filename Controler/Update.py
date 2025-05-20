@@ -1,7 +1,7 @@
 import sqlite3
 import json
 
-from Controler.Controler import get_rutine
+from Controler.Controler import get_rutine, get_client
 from Model.Dia import Dia
 from Model.Peso import Peso
 from Model.Progreso import Progreso
@@ -215,6 +215,8 @@ def change_rutine(rutine: int, client_id: int):
 
     cur.execute(f"UPDATE Cliente set Rutina = {rutine} where id = {client_id}")
     conn.commit()
+    c= get_client(client_id=client_id)
+    print(c.rutina.id)
     conn.close()
 
 

@@ -70,11 +70,14 @@ def get_pesos(id: int) -> Peso:
     return Peso(id, json.loads(pesos[1])["pesos"])
 
 
-def get_client(name: str) -> Cliente:
+def get_client(name: str = None, client_id: int = None) -> Cliente:
     conn = sqlite3.connect("Clientes.db")
     cur = conn.cursor()
 
-    client = cur.execute(f"SELECT * from Cliente WHERE Nombre = '{name}'").fetchone()
+    if name is not None:
+        client = cur.execute(f"SELECT * from Cliente WHERE Nombre = '{name}'").fetchone()
+    else:
+        client = cur.execute(f"SELECT * from Cliente WHERE id = {client_id}").fetchone()
 
     client_id = client[0]
     name = client[1]

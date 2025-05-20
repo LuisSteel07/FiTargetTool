@@ -5,6 +5,14 @@ FiTargetTool es una herramienta para administrar una serie de clientes, donde de
 El proyecto FiTargetTool posee una arquitectura MVC (Model, View, Controler) donde separamos por capas el código del mismo. En el modelo encontramos las clases que usamos para modelar los datos extraídos de la Base de Datos, usamos SQLite.
 
 ## Base de Datos
+La base de datos posee tablas como:
+
+| Tabla    | Campos                                                                                                                                                                        | Funcion                                                                                                                     |
+|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------|
+| Cliente  | id, Nombre, Edad, Rutina(id), Progreso(id), Pesos(id), Foto                                                                                                                   | Esta tabla se encarga de guardar los datos mas importantes del cliente.                                                     |
+| Pesos    | id, pesos(txt json)                                                                                                                                                           | Esta tabla guarda una lista de pesos en forma de texto en formato json.                                                     |
+| Progreso | id, Pecho, Trapecio, Romboides, Dorsal, EspaldaBaja, Biceps, Triceps, AnteBrazo, DeltoidePosterior, DeltoideLateral, DeltoideAnterior, Cuadriceps, Isq, Gluteos, Pantorrillas | Esta tabla guarda los pesos levantados por cada grupo muscular en texto en formato json.                                    |
+| Rutina   | id, Nombre, Lunes, Martes, Miercoles, Jueves, Viernes, Sabado, Domingo                                                                                                        | Esta tabla guarda la lista de ejercicios que se realizaran en los dias establecidos, cada uno con un texto en formato json. |
 
 ## Model
 En la carpeta models, encontraremos todas las clases de cada tabla de la DB. Donde esto nos facilitara la manipulacion de los valores y objetos retornados para cada funcion.
@@ -128,10 +136,6 @@ En este archivo estan las funciones que facilian el muestreo de los graficos de 
 | create_left_chart_axis      | Esta funcion retorna los elementos en la parte izquierda de la grafica.                                                                               |
 | create_bottom_chart_axis    | Esta funcion retorna los elementos en la parte inferior de la grafica.                                                                                |
 | collection_graphics_view    | Esta funcion muestra una seccion la cual muestra informacion de cada grupo muscular a traves de las graficas, ademas de poder editarlas directamente. |
-
-
-
-
 
 ### RoutineRouteUpdateView.py
 En este archivo se encuentra la clase "RoutineRouteUpdateView", donde esta proporciona una View en la ruta "/routine_update" la cual permite a traves de su interfaz la modificacion de la lista de ejercicios en un dia determinado.

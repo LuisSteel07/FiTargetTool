@@ -1,5 +1,5 @@
 import flet as ft
-from Controler.Controler import get_all_data, get_list_id_rutines
+from Controler.Controler import get_all_data, get_list_id_rutines, get_client
 from Controler.Create import create_client, create_routine
 from Controler.Delete import delete_client
 from Controler.Update import update_peso, update_progress, change_rutine, update_client_data, \
@@ -237,11 +237,12 @@ def change_rutine_view(root: ft.Page, client_id: int):
         rutine.options.append(ft.dropdown.Option(str(identifier)))
 
     def validate():
-        root.close(alert)
         if rutine.value is None:
             alert_invalid_data(root)
         else:
+            print(rutine.value)
             change_rutine(int(rutine.value), client_id)
+        root.close(alert)
 
     alert = ft.AlertDialog(
         modal=True,
@@ -258,8 +259,9 @@ def change_rutine_view(root: ft.Page, client_id: int):
 
 
 def change_client_view(root: ft.Page, client_id: int):
-    name = ft.TextField(label="Nuevo Nombre", tooltip="Nombre")
-    age = ft.TextField(label="Nuevo Edad", tooltip="Edad")
+    old_client = get_client(client_id=client_id)
+    name = ft.TextField(label="Nuevo Nombre", tooltip="Nombre", value=old_client.nombre)
+    age = ft.TextField(label="Nuevo Edad", tooltip="Edad", value=f"{old_client.edad}")
 
     def validacion():
         root.close(alert)
