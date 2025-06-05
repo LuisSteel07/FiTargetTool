@@ -8,7 +8,7 @@ from Model.Rutina import Rutina
 from Model.Progreso import Progreso
 
 
-def get_rutine(id: int) -> Rutina:
+def get_routine(id: int) -> Rutina:
     conn = sqlite3.connect("Clientes.db")
     cur = conn.cursor()
 
@@ -82,13 +82,13 @@ def get_client(name: str = None, client_id: int = None) -> Cliente:
     client_id = client[0]
     name = client[1]
     age = client[2]
-    rutine = client[3]
+    routine = client[3]
     progress = client[4]
     pesos = client[5]
     photo = client[6]
 
     conn.close()
-    return Cliente(client_id, name, age, get_rutine(rutine), get_progress(progress), get_pesos(pesos), photo)
+    return Cliente(client_id, name, age, get_routine(routine), get_progress(progress), get_pesos(pesos), photo)
 
 
 def get_list_names() -> list[str]:

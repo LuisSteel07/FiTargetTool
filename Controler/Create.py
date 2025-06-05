@@ -1,5 +1,8 @@
 import sqlite3
-from Controler.Update import update_progress, update_peso
+
+from Controler.Controler import get_client
+from Controler.Update import update_progress, update_peso, update_client_data
+from Model.Photo import Photo
 
 
 def create_client(nombre: str, edad: int, peso: int, rutina: int, foto: str, data_progress: list):
@@ -12,6 +15,9 @@ def create_client(nombre: str, edad: int, peso: int, rutina: int, foto: str, dat
     cur.execute(query)
     conn.commit()
     conn.close()
+
+    cliente = get_client(name=nombre)
+    update_client_data(cliente.id, nombre, edad, Photo(cliente.foto, cliente.id).photo_path)
 
 
 def create_pesos(initial_peso) -> int:

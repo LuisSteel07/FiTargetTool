@@ -17,15 +17,15 @@ def auto_complete_suggestion_data() -> list[AutoCompleteSuggestion]:
     return auto_complete_list
 
 
-def auto_complete_suggestion_id_rutines() -> list[AutoCompleteSuggestion]:
+def auto_complete_suggestion_id_routines() -> list[AutoCompleteSuggestion]:
     list_id = Controler.get_list_id_rutines()
     auto_complete_list = list()
 
-    for id in list_id:
+    for idx in list_id:
         auto_complete_list.append(
             AutoCompleteSuggestion(
-                key=str(id),
-                value=str(id),
+                key=str(idx),
+                value=str(idx),
             )
         )
 

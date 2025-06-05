@@ -1,6 +1,6 @@
 [project]
 name = "fitargettool"
-version = "0.3.6"
+version = "0.4.8"
 description = "FiTargetTool se encargará de proporcionar información acerca de las rutinas de ejecicio de cada cliente, además de poder editarlas y modificarlas. Con estos datos se mostrarán gráficas que proporcionarán mas información."
 readme = "README.md"
 requires-python = ">=3.12"

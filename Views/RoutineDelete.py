@@ -1,14 +1,17 @@
 import flet as ft
 
-from Controler.Controler import get_rutine
+from Controler.Controler import get_routine
 from Controler.Update import update_routine_full_day
 from Model.Ejercicios import Ejercicios
 from Model.Dia import Dia
 
-class RoutineRouteUpdateView:
-    def __init__(self, page: ft.Page, ident):
-        self.page = page
-        self.rutina = get_rutine(ident)
+class RoutineDelete(ft.View):
+    def __init__(self, root: ft.Page, identifier):
+        super().__init__()
+        self.root = root
+        self.routine = get_routine(identifier)
+        self.identifier = identifier
+        self.route = "/routine/delete"
         self.dia_control = ft.Dropdown(
             options=[
                 ft.dropdown.Option(Dia.LUNES.value),
@@ -28,12 +31,9 @@ class RoutineRouteUpdateView:
         self.checklist_options: list[ft.Checkbox] = []
         self.checklist_options_view = ft.Column()
 
-    def show_view(self):
-        return ft.View(
-            route="/routine_update",
-            controls=[
+        self.controls = [
                 ft.Row([
-                    ft.IconButton(ft.icons.ARROW_BACK, icon_size=25, on_click=lambda e: self.page.go("/"))
+                    ft.IconButton(ft.icons.ARROW_BACK, icon_size=25, on_click=lambda e: self.root.go(f"/routine/{self.identifier}"))
                 ]),
                 ft.Row([
                     self.dia_control,
@@ -41,33 +41,33 @@ class RoutineRouteUpdateView:
                     ft.FilledButton("Guardar", ft.icons.CREATE, on_click=lambda e: self.save_changes())
                 ])
             ]
-        )
+
 
     def create_checklist(self):
         self.checklist_options.clear()
         self.checklist_options_view.controls.clear()
 
         if self.dia_control.value == Dia.LUNES.value:
-            self.exercises_list = self.rutina.lunes
+            self.exercises_list = self.routine.lunes
         elif self.dia_control.value == Dia.MARTES.value:
-            self.exercises_list = self.rutina.martes
+            self.exercises_list = self.routine.martes
         elif self.dia_control.value == Dia.MIERCOLES.value:
-            self.exercises_list = self.rutina.miercoles
+            self.exercises_list = self.routine.miercoles
         elif self.dia_control.value == Dia.JUEVES.value:
-            self.exercises_list = self.rutina.jueves
+            self.exercises_list = self.routine.jueves
         elif self.dia_control.value == Dia.VIERNES.value:
-            self.exercises_list = self.rutina.viernes
+            self.exercises_list = self.routine.viernes
         elif self.dia_control.value == Dia.SABADO.value:
-            self.exercises_list = self.rutina.sabado
+            self.exercises_list = self.routine.sabado
         elif self.dia_control.value == Dia.DOMINGO.value:
-            self.exercises_list = self.rutina.domingo
+            self.exercises_list = self.routine.domingo
 
         for exercise in self.exercises_list:
             self.checklist_options.append(ft.Checkbox(exercise.name[0]))
 
         self.checklist_options_view.controls = self.checklist_options
 
-        self.page.update()
+        self.root.update()
 
     def save_changes(self):
         list_ejercices_save: list[Ejercicios] = self.exercises_list
@@ -78,6 +78,6 @@ class RoutineRouteUpdateView:
                     self.exercises_list.remove(ejercice)
                 break
 
-        update_routine_full_day(self.rutina.id, self.dia_control.value, list_ejercices_save)
+        update_routine_full_day(self.routine.id, self.dia_control.value, list_ejercices_save)
 
-        self.page.update()
+        self.root.go(f"/routine/{self.identifier}")

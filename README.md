@@ -25,6 +25,7 @@ En la carpeta models, encontraremos todas las clases de cada tabla de la DB. Don
 | Peso       | Esta clase almacenara los pesos en forma de lista donde lo identificaremos con su id respectivo.                                                              |
 | Progreso   | Esta clase tendra una lista de valores de PR (personal records) por cada grupo muscular.                                                                      |
 | Rutina     | Esta clase tendra un nombre y almacenara por cada dia de la semana una lista de objetos de la clase Ejercicios.                                               |
+| Photo      | Esta clase permite el manejo de las fotos de los usuarios, guardandolas en el directorio del proyecto.                                                        |
 
 ## Funciones CRUD
 Estas funciones se encuentran en la carpeta Controler, donde se podran apreciar archivos que contienen funciones para un destino determinado:
@@ -35,7 +36,7 @@ Funciones como:
 
 | Funcion             | Descripcion                                                                                                                                                                                            |
 |---------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| get_rutine          | Esta funcion retornara un objeto de la clase Rutina, este tendra el id, el nombre de la rutina y luego para cada dia, su lista de ejercicios correspondientes.                                         |
+| get_routine         | Esta funcion retornara un objeto de la clase Rutina, este tendra el id, el nombre de la rutina y luego para cada dia, su lista de ejercicios correspondientes.                                         |
 | get_progress        | Esta extraera el progreso con un id en especifico y nos lo retornara en un objeto de la clase Progreso.                                                                                                |
 | get_pesos           | Esta funcion retorna un objeto de la clase Peso, en donde almacena el id y lista de valores de los pesos almacenados.                                                                                  |
 | get_client          | Esta funcion retorna un objeto de la clase Ciente, localizandolo con el nombre del mismo, estableciendo en ese objeto el id, nombre, edad, rutina y demas datos guardados acerca del usuario en la DB. |
@@ -84,16 +85,79 @@ En la carpeta Utils de podran encontrar archivos que proporcionen utilidades par
 |----------------------|----------------------------------------------------------------------------------------------------------------------------------|
 | generate_models_json | Esta funcion crea un diccionario, compatible con la biblioteca JSON, en la misma se almacenan valores de la clase de ejercicios. |
 
-## View
-En la carpeta View encontraremos varias funciones que nos permitiran cargar determinados componentes o view completas para cada ruta del programa.
+## Views
+En la carpeta Views estaran todas las views que usaremos en el programa, en estas estan:
+
+| View             | Funcion                                                                                                                                       |
+|------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|
+| PrincipalView.py | Es la view principal, donde se podra encontrar como crear los cliente y rutinas, ademas de buscar los clientes creados.                       |
+| ClientView.py    | Esta es la view donde se ven los datos de un cliente en especifico, ademas de su rutina.                                                      |
+| RoutineView.py   | Esta es la view donde vemos todas las rutinas creadas hasta el momento, con la posibilidad de darle en editar y poder empezar a modificarlas. |
+| RoutineUpdate.py | Esta es la view donde se escogio una rutina en especifico y se nos daran varias opciones para editarlas.                                      |
+| RoutineAdd.py    | En esta view podremos agregar un ejercicio a un dia especifico de la rutina.                                                                  |
+| RoutineDelete.py | Esta view nos permite eliminar uno o varios ejercicios de un dia en especifico.                                                               |
+| RoutineEdit.py   | Esta view permite cambiar el nombre de uno o varios ejercicios                                                                                |
+
+## DataPanels
+En la carpeta DataPanels estan todos los componentes que a traves de AlertDialogs podremos modificar los valores de un usuario, rutina o progreso. En esta podemos encontrar 
+
+### ProgressGraphics.py
+En este archivo estan las funciones que facilian el muestreo de los graficos de los registros de progresos de los clientes ingresados en la DB.
+
+| Funcion                     | Descripcion                                                                                                                                           |
+|-----------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
+| add_progresso               | Esta funcion agrega un nuevo progreso al cliente en cada uno de los grupos musculares                                                                 |
+| open_graphic                | Esta funcion se encarga de cargar el grafico en un AlertDialog para poder ser visualizado.                                                            |
+| show_graphic                | Esta funcion retorna el grafico totalmente construido.                                                                                                |
+| create_linechartdata_points | Esta funcion crea la lista de valores que se van a ir viendo punto por punto.                                                                         |
+| create_left_chart_axis      | Esta funcion retorna los elementos en la parte izquierda de la grafica.                                                                               |
+| create_bottom_chart_axis    | Esta funcion retorna los elementos en la parte inferior de la grafica.                                                                                |
+| collection_graphics_view    | Esta funcion muestra una seccion la cual muestra informacion de cada grupo muscular a traves de las graficas, ademas de poder editarlas directamente. |
+
+### AddPeso.py
+Este panel permite agregar un nuevo valor al progreso de pesos.
+
+### ChangeDataUser.py
+Este panel permite actualizar los valores de un cliente, ya sea: el nombre, edad o foto.
+
+### ChangeRoutine.py
+Este permite cambiar la rutina de un cliente por otra.
+
+### CreateClient.py
+Este permite crear un nuevo cliente.
+
+### CreateRoutine.py
+Este permite crear una nueva rutina.
+
+### ProgressGraphics.py
+Este permite manipular los progresos alcanzados por un cliente y poder modificarlos.
+
+### ShowFullDataClient.py
+Este muestra un panel con toda la informacion de cada cliente registrado.
+
+## Components
+En la carpeta Components estaran todos los componentes que se estaran reutilizando en todo lo amplio del programa, aqui se encontraran:
+
+### AlertPanel.py
+En este archivo podremos encontrar el componente alert_invalid_data, el cual se usara en todo momento que se necesite comunicar a traves de un AlertDialog un error al introducir algun valor. 
 
 ### AutoCompleteSuggestionData.py
 En este archivo encontraremos funciones para el uso de los componentes "AutoCompleteSuggestion", los cuales son usados para tener ayuda a la hora de introducir valores y ir directo a los requeridos.
 
-| Funcion                             | Descripcion                                                                                                                                                          |
-|-------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| auto_complete_suggestion_data       | Esta funcion retorna un objeto de la clase AutoCompleteSuggestion, el cual contiene una lista de los posibles nombres de usuario que se pueden insertar para buscar. |
-| auto_complete_suggestion_id_rutines | Esta funcion retorna un objeto de la clase AutoCompleteSuggestion, el cual contiene una lista de los posibles id de rutinas que se pueden insertar para buscar.      |
+| Funcion                              | Descripcion                                                                                                                                                          |
+|--------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| auto_complete_suggestion_data        | Esta funcion retorna un objeto de la clase AutoCompleteSuggestion, el cual contiene una lista de los posibles nombres de usuario que se pueden insertar para buscar. |
+| auto_complete_suggestion_id_routines | Esta funcion retorna un objeto de la clase AutoCompleteSuggestion, el cual contiene una lista de los posibles id de rutinas que se pueden insertar para buscar.      |
+
+### PhotoComponent.py
+En este se encuentra el componente PhotoComponent, el cual se encarga de mostrar correctamente la imagen de un usuario
+
+### RoutineComponent.py
+Este componente muestra una rutina especifica, ademas de que cada ejercicio al seleccionarlo podremos ver su informacion, como: las tandas, las repeticiones y pesos.
+
+### UserData.py
+Este componente retorna una seccion en donde se muestra la informacion de un cliente, incluyendo la foto del mismo.
+
 
 ### ClienteViewFull.py
 Este archivo contiene la funcion unica "show_client_view", la cual retorna una columna que contiene la unico de muchas informaciones y formas de interacciones proporcionadas por otras funciones, mostrando la rutina completa y acciones como cambiarla o eliminar u editar algun ejercicio. 
@@ -125,17 +189,7 @@ En este archivo se encontraran funciones las cual nos serviran para usar compone
 | rows_table_clients       | Funcion que crea las filas de la tabla creada en la funcion "create_datatable_clients".                            |
 | show_full_datatable      | Esta funcion muestra un AlertDialog, donde su contenido es la tabla retornada por la funcion "rows_table_clients". |
 
-### ProgressGraphics.py
-En este archivo estan las funciones que facilian el muestreo de los graficos de los registros de progresos de los clientes ingresados en la DB.
 
-| Funcion                     | Descripcion                                                                                                                                           |
-|-----------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
-| open_graphic                | Esta funcion se encarga de cargar el grafico en un AlertDialog para poder ser visualizado.                                                            |
-| show_graphic                | Esta funcion retorna el grafico totalmente construido.                                                                                                |
-| create_linechartdata_points | Esta funcion crea la lista de valores que se van a ir viendo punto por punto.                                                                         |
-| create_left_chart_axis      | Esta funcion retorna los elementos en la parte izquierda de la grafica.                                                                               |
-| create_bottom_chart_axis    | Esta funcion retorna los elementos en la parte inferior de la grafica.                                                                                |
-| collection_graphics_view    | Esta funcion muestra una seccion la cual muestra informacion de cada grupo muscular a traves de las graficas, ademas de poder editarlas directamente. |
 
 ### RoutineRouteUpdateView.py
 En este archivo se encuentra la clase "RoutineRouteUpdateView", donde esta proporciona una View en la ruta "/routine_update" la cual permite a traves de su interfaz la modificacion de la lista de ejercicios en un dia determinado.

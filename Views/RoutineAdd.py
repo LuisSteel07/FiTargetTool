@@ -5,10 +5,13 @@ from Model.Ejercicios import Ejercicios
 from Model.Dia import Dia
 
 
-class RoutineRouteView:
-    def __init__(self, page: ft.Page, ident):
-        self.page = page
+class RoutineAdd(ft.View):
+    def __init__(self, root: ft.Page, ident):
+        super().__init__()
+        self.root = root
         self.routine_id = ident
+        self.route = "/routine/add"
+
         self.new_ejercicio = ft.TextField(label="Nuevo Ejercicio", tooltip="Diga el nuevo ejercicio a agregar")
         self.list_values_reps = ft.Row()
         self.list_values_weights = ft.Row()
@@ -32,25 +35,22 @@ class RoutineRouteView:
             on_change=lambda e: self.on_change_tandas()
         )
 
-    def show_view(self):
-        return ft.View(
-            route="/routine",
-            controls=[
-                ft.Row([
-                    ft.IconButton(ft.icons.ARROW_BACK, icon_size=25, on_click=lambda e: self.page.go("/"))
-                ]),
-                ft.Row([
-                    ft.Column([
-                        self.new_ejercicio,
-                        self.dia_control,
-                        self.cant_tandas,
-                        self.list_values_reps,
-                        self.list_values_weights,
-                        ft.FilledButton("Guardar", ft.icons.CREATE, on_click=lambda e: self.save_instance())
-                    ])
+        self.controls = [
+            ft.Row([
+                ft.IconButton(ft.icons.ARROW_BACK, icon_size=25, on_click=lambda e: self.root.go(f"/routine/{self.routine_id}"))
+            ]),
+            ft.Row([
+                ft.Column([
+                    self.new_ejercicio,
+                    self.dia_control,
+                    self.cant_tandas,
+                    self.list_values_reps,
+                    self.list_values_weights,
+                    ft.FilledButton("Guardar", ft.icons.CREATE, on_click=lambda e: self.save_instance())
                 ])
-            ]
-        )
+            ])
+        ]
+
 
     def on_change_tandas(self):
         try:
@@ -72,11 +72,11 @@ class RoutineRouteView:
                         width=100,
                         input_filter=ft.InputFilter(allow=True, regex_string=r"^[0-99999999]*$", replacement_string="0")
                     ))
-                self.page.update()
+                self.root.update()
         except ValueError as e:
             self.list_values_reps.controls.clear()
             self.list_values_weights.controls.clear()
-            self.page.update()
+            self.root.update()
             print(f"Excepcion asegurada ((ValueError)) --> {e}")
 
     def create_ejercicio_object(self) -> Ejercicios:
@@ -94,4 +94,4 @@ class RoutineRouteView:
     def save_instance(self):
         ejercicio = self.create_ejercicio_object()
         update_rutina(self.routine_id, self.dia_control.value, ejercicio)
-        self.page.go("/")
+        self.root.go(f"/routine/{self.routine_id}")
