@@ -62,10 +62,13 @@ class RoutineView(ft.View):
             rutines.append(get_routine(i))
 
         for rutine in rutines:
-            table_rows.append(ft.DataRow(cells=[
-                ft.DataCell(ft.Text(f"{rutine.id}")),
-                ft.DataCell(ft.Text(f"{rutine.nombre}")),
-                ft.DataCell(ft.IconButton(ft.icons.EDIT, width=45, on_click=lambda e: self.root.go(f"/routine/{rutine.id}")))
-            ]))
+            table_rows.append(self.create_data_row(rutine.id, rutine.nombre))
 
         return table_rows
+
+    def create_data_row(self, identifier, name) -> ft.DataRow:
+        return ft.DataRow(cells=[
+            ft.DataCell(ft.Text(f"{identifier}")),
+            ft.DataCell(ft.Text(f"{name}")),
+            ft.DataCell(ft.IconButton(ft.icons.EDIT, width=45, on_click=lambda e: self.root.go(f"/routine/{identifier}")))
+        ])

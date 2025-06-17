@@ -5,6 +5,7 @@ from Views.RoutineEdit import RoutineEdit
 from Views.RoutineDelete import RoutineDelete
 from Views.RoutineAdd import RoutineAdd
 from Views.PrincipalView import PrincipalView
+from Views.RoutineOrder import RoutineOrder
 from Views.RoutineUpdate import RoutineUpdate
 from Views.RoutineView import RoutineView
 
@@ -12,7 +13,6 @@ from Views.RoutineView import RoutineView
 def main(page: ft.Page):
     page.title = "FiTargetTool"
     page.scroll = ft.ScrollMode.ALWAYS
-    cache_data = 0
 
     def route_change(route):
         page.views.clear()
@@ -34,6 +34,8 @@ def main(page: ft.Page):
             page.views.append(RoutineEdit(page, troute.id))
         if troute.match("/routine/delete/:id"):
             page.views.append(RoutineDelete(page, troute.id))
+        if troute.match("/routine/order/:id"):
+            page.views.append(RoutineOrder(page, troute.id))
 
         page.update()
 

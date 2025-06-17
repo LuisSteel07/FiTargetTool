@@ -49,7 +49,7 @@ class RoutineUpdate(ft.View):
                         ft.IconButton(
                             ft.icons.SORT,
                             icon_size=25,
-                            on_click=lambda e: self.root.go(f"/routine/sort/{self.identifier}"),
+                            on_click=lambda e: self.root.go(f"/routine/order/{self.identifier}"),
                             tooltip="Ordena los ejercicios"
                         )
                     ]),

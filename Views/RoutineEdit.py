@@ -90,7 +90,7 @@ class RoutineEdit(ft.View):
     def __init__(self, root: ft.Page, identifier):
         super().__init__()
         self.root = root
-        self.route = "/routine/delete"
+        self.route = "/routine/update"
         self.identifier = identifier
         self.routine = get_routine(self.identifier)
         self.table_routine = TableRoutineEdit(self.identifier)

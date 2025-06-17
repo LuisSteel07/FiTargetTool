@@ -96,7 +96,8 @@ En la carpeta Views estaran todas las views que usaremos en el programa, en esta
 | RoutineUpdate.py | Esta es la view donde se escogio una rutina en especifico y se nos daran varias opciones para editarlas.                                      |
 | RoutineAdd.py    | En esta view podremos agregar un ejercicio a un dia especifico de la rutina.                                                                  |
 | RoutineDelete.py | Esta view nos permite eliminar uno o varios ejercicios de un dia en especifico.                                                               |
-| RoutineEdit.py   | Esta view permite cambiar el nombre de uno o varios ejercicios                                                                                |
+| RoutineEdit.py   | Esta view permite cambiar el nombre de uno o varios ejercicios.                                                                               |
+| RoutineOrder.py  | Esta view permite ordenar de la forma necesaria en la que se quiera ejecutar la rutina.                                                       |
 
 ## DataPanels
 En la carpeta DataPanels estan todos los componentes que a traves de AlertDialogs podremos modificar los valores de un usuario, rutina o progreso. En esta podemos encontrar 
