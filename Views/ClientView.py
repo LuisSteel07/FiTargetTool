@@ -1,6 +1,7 @@
 import flet as ft
 
 from Components.UserData import info_cliente_view
+from Controler.Delete import delete_client
 from DataPanels.AddPeso import add_peso
 from DataPanels.ChangeDataUser import change_client_view
 from DataPanels.ProgressGraphics import collection_graphics_view, show_graphic
@@ -24,6 +25,15 @@ class ClientView(ft.View):
                     ]),
                     ft.Row(
                         [
+                            ft.IconButton(
+                                icon=ft.icons.DELETE_ROUNDED,
+                                bgcolor=ft.colors.RED_400,
+                                icon_color=ft.colors.RED_900,
+                                on_click=lambda e: {
+                                    delete_client(self.client),
+                                    self.root.go("/")
+                                }
+                            ),
                             ft.FilledButton(
                                 "Editar Valores",
                                 on_click=lambda e: change_client_view(root, self.client.id),

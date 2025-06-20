@@ -1,3 +1,4 @@
+import os
 import sqlite3
 from Model.Cliente import Cliente
 
@@ -6,9 +7,14 @@ def delete_client(client: Cliente):
     conn = sqlite3.connect("Clientes.db")
     cur = conn.cursor()
 
-    cur.execute(f"DELETE from Cliente where id = {client.id}")
-    cur.execute(f"DELETE FROM Progreso WHERE id = {client.progreso.id}")
-    cur.execute(f"DELETE FROM Pesos WHERE id = {client.pesos.id}")
+    try:
+        cur.execute(f"DELETE from Cliente where id = {client.id}")
+        cur.execute(f"DELETE FROM Progreso WHERE id = {client.progreso.id}")
+        cur.execute(f"DELETE FROM Pesos WHERE id = {client.pesos.id}")
+        os.remove(client.foto)
+    except FileNotFoundError:
+        # The user use avatar picture
+        pass
 
     conn.commit()
     conn.close()
